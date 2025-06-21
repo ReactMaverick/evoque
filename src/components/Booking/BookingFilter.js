@@ -102,7 +102,7 @@ export default function BookingFilter() {
                     Apply
                 </button>
                 <button
-                    className="rounded-lg bg-text transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-white font-semibold text-sm"
+                    className="rounded-lg bg-text transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-foreground font-semibold text-sm"
                     title="Clear Filters"
                     onClick={handleClearFilters}
                 >

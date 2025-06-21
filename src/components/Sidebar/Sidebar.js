@@ -27,7 +27,7 @@ export default function Sidebar() {
             className="fixed top-0 left-0 h-screen bg-secondary rounded-r-[20px] border-r-[1px] border-text px-[1.25rem] py-[2rem] flex flex-col z-50"
         >
             <button
-                className="self-end bg-primary rounded-full absolute top-[2rem] right-[-1rem] border-[1px] border-text transition cursor-pointer hover:bg-gray-200 hover:text-text"
+                className="self-end bg-primary rounded-full absolute top-[2rem] right-[-1rem] border-[1px] border-text transition cursor-pointer hover:bg-gray-200 text-white hover:text-text"
                 onClick={handleToggleSidebar}
                 aria-label="Toggle sidebar"
             >

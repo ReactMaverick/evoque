@@ -24,12 +24,12 @@ export default function BookingTable() {
     // Function to render cell content based on column type
     const renderCell = (value, column) => {
         console.log(`Rendering cell for column: ${column}, value: ${value}`);
-        
+
         let cell = value;
         switch (column) {
             case 'trip_status':
                 switch (value) {
-                    case 'Travelled':                        
+                    case 'Travelled':
                         cell = <span className="bg-lime-green px-2 py-1 rounded-xl text-black">Travelled</span>;
                         break;
                     case 'Confirmed':
@@ -65,7 +65,7 @@ export default function BookingTable() {
             default:
                 break;
         };
-        
+
         return cell;
     };
 
@@ -80,16 +80,22 @@ export default function BookingTable() {
         <div className="booking-table w-full bg-black rounded-lg overflow-hidden shadow-lg px-4 py-4">
             {/* Booking Filter  */}
             <BookingFilter />
-            <div className="2xl:overflow-hidden rounded-[4px] overflow-x-scroll">
+            <div className="rounded-[4px] overflow-x-auto">
                 <table className="w-full text-left text-table-text border-2 border-table-border rounded-[4px] overflow-hidden bg-primary border-collapse">
                     <thead>
                         <tr>
                             {columnsCamelCase.map((col, index) => (
-                                <th key={index} className="p-[12px] bg-primary text-[14px] font-normal border border-table-border">
+                                <th key={index} className="p-2 bg-primary text-[14px] font-normal border border-table-border"
+                                    style={
+                                        columns[index].toLowerCase().includes("value")
+                                            ? { width: "80px", minWidth: "80px", maxWidth: "80px" }
+                                            : undefined
+                                    }
+                                >
                                     {col}
                                 </th>
                             ))}
-                            <th className="p-[12px] text-[14px] border-2 border-table-border">Actions</th>
+                            <th className="p-2 text-[14px] border border-table-border font-normal">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="bg-secondary">
@@ -97,11 +103,17 @@ export default function BookingTable() {
                             paginatedData.map((row, index) => (
                                 <tr key={index}>
                                     {columns.map((col, index) => (
-                                        <td key={index} className="p-[12px] text-[10px] border border-table-border">
+                                        <td key={index} className="p-2 text-[10px] border border-table-border"
+                                            style={
+                                                col.toLowerCase().includes("value")
+                                                    ? { width: "80px", minWidth: "80px", maxWidth: "80px" }
+                                                    : undefined
+                                            }
+                                        >
                                             {renderCell(row[col], col)}
                                         </td>
                                     ))}
-                                    <td className="p-[12px] text-[10px] border border-table-border">
+                                    <td className="p-2 text-[10px] border border-table-border">
                                         <div className="flex justify-center">
                                             <button title="Edit" className="bg-btn rounded-lg h-[35px] w-[35px] flex justify-center items-center hover:bg-btn-hover transition text-black">
                                                 <Icon icon="material-symbols:edit-outline" width={20} height={20} />
