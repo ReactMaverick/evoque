@@ -36,9 +36,9 @@ export default function BookingTable() {
                     case 'Cancelled':
                         cell = <span className="bg-pastel-red px-2 py-1 rounded-xl text-black">Cancelled</span>;
                         break;
-                        case 'On Tour':
+                    case 'On Tour':
                         cell = <span className="bg-pastel-yellow px-2 py-1 rounded-xl text-black">On Tour</span>;
-                            break;
+                        break;
                     default:
                         cell = <span className="text-gray-500 font-semibold">{value}</span>;
                         break;
@@ -67,45 +67,47 @@ export default function BookingTable() {
     };
 
     return (
-        <div className="booking-table w-full overflow-x-auto bg-black rounded-lg shadow-lg px-4 py-4">
+        <div className="booking-table w-full bg-black rounded-lg overflow-hidden shadow-lg px-4 py-4">
             {/* Booking Filter  */}
             <BookingFilter />
-            <table className="w-full text-center text-table-text border border-text rounded-sm overflow-hidden bg-primary border-collapse">
-                <thead>
-                    <tr>
-                        {columnsCamelCase.map((col, index) => (
-                            <th key={index} className="p-4 text-[0.75rem] border border-text">
-                                {col}
-                            </th>
-                        ))}
-                        <th className="p-4 text-[0.75rem] border border-text">Actions</th>
-                    </tr>
-                </thead>
-                <tbody className="bg-secondary">
-                    {paginatedData.length > 0 ? (
-                        paginatedData.map((row, index) => (
-                            <tr key={index}>
-                                {columns.map((col, index) => (
-                                    <td key={index} className="p-2 text-[0.625rem] border border-table-border">
-                                        {renderCell(row[col], col)}
-                                    </td>
-                                ))}
-                                <td className="p-2 text-[0.625rem] border border-table-border">
-                                    <div className="flex justify-center">
-                                        <button title="Edit" className="bg-btn rounded-lg p-1 hover:bg-btn-hover transition text-black">
-                                            <Icon icon="material-symbols:edit-outline" width={18} height={18} />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
+            <div className="2xl:overflow-hidden overflow-x-scroll">
+                <table className="w-full text-left text-table-text border border-text rounded-sm bg-primary border-collapse">
+                    <thead>
                         <tr>
-                                <td className="p-2 border border-table-border" colSpan={columns.length || 1}>No data available</td>
+                            {columnsCamelCase.map((col, index) => (
+                                <th key={index} className="p-[12px] text-[14px] font-normal border border-text">
+                                    {col}
+                                </th>
+                            ))}
+                            <th className="p-[12px] text-[14px] border border-text">Actions</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="bg-secondary">
+                        {paginatedData.length > 0 ? (
+                            paginatedData.map((row, index) => (
+                                <tr key={index}>
+                                    {columns.map((col, index) => (
+                                        <td key={index} className="p-[12px] text-[10px] border border-table-border">
+                                            {renderCell(row[col], col)}
+                                        </td>
+                                    ))}
+                                    <td className="p-[12px] text-[10px] border border-table-border">
+                                        <div className="flex justify-center">
+                                            <button title="Edit" className="bg-btn rounded-lg h-[35px] w-[35px] flex justify-center items-center hover:bg-btn-hover transition text-black">
+                                                <Icon icon="material-symbols:edit-outline" width={20} height={20} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td className="p-2 border border-table-border" colSpan={columns.length || 1}>No data available</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
             <BookingPagination
                 bookingData={bookingData}
                 page={page}

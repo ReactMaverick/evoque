@@ -2,19 +2,18 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "motion/react"
+import { usePathname } from "next/navigation";
+import { motion } from "motion/react";
 import { LOGO } from "@/constants/images";
 import { selectIsExpanded, selectNavItems, toggleSidebar } from "@/lib/features/sidebar/sidebarSlice";
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export default function Sidebar() {
-
     const dispatch = useAppDispatch();
-
     const navItems = useAppSelector(selectNavItems);
-
     const isExpanded = useAppSelector(selectIsExpanded);
+    const pathname = usePathname();
 
     const handleToggleSidebar = useCallback(() => {
         dispatch(toggleSidebar());
@@ -26,7 +25,6 @@ export default function Sidebar() {
             animate={{ width: isExpanded ? 200 : 70 }}
             transition={{ type: "spring", stiffness: 260, damping: 30 }}
             className="fixed top-0 left-0 h-screen bg-secondary rounded-r-[20px] border-r-[1px] border-text px-[1.25rem] py-[2rem] flex flex-col z-50"
-            // style={{ overflow: "hidden" }}
         >
             <button
                 className="self-end bg-primary rounded-full absolute top-[2rem] right-[-1rem] border-[1px] border-text transition cursor-pointer hover:bg-gray-200 hover:text-text"
@@ -60,11 +58,13 @@ export default function Sidebar() {
                         <li key={item.name}>
                             <Link
                                 href={item.path}
-                                className={`flex items-center gap-3  rounded-md hover:bg-gray-100 transition-colors text-text  font-medium
+                                className={`flex items-center gap-3 rounded-md transition-colors text-text font-medium
                                     ${isExpanded
                                         ? "justify-start"
                                         : "justify-center flex-col"
-                                    }`}
+                                    }
+                                    ${pathname === item.path ? " text-white" : "hover:text-white"}
+                                `}
                                 title={item.name}
                             >
                                 <Icon icon={item.icon} width={24} height={24} />
@@ -81,7 +81,7 @@ export default function Sidebar() {
                                         overflow: "hidden",
                                         whiteSpace: "nowrap",
                                     }}
-                                    className="text-sm  font-semibold transition-all duration-300"
+                                    className="text-sm font-semibold transition-all duration-300"
                                 >
                                     {isExpanded && item.name}
                                 </motion.span>

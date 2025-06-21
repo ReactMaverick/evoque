@@ -42,7 +42,7 @@ export default function BookingFilter() {
                     filter.type === "search" ? (
                         <div
                             key={idx}
-                            className="inputbox max-w-[165px] w-full flex items-center gap-2 border border-border rounded-full px-[8px] py-[5px] bg-secondary"
+                            className="inputbox max-w-[165px] 2xl:max-w-[12%] w-full flex items-center gap-2 border border-border rounded-full px-[8px] py-[5px] bg-secondary"
                         >
                             <Icon icon="lucide:search" className="text-[1.25rem] text-text" />
                             <input
@@ -54,7 +54,7 @@ export default function BookingFilter() {
                     ) : (
                         <div
                             key={idx}
-                            className="inputbox max-w-[150px] w-full flex items-center border border-border rounded-[12px] px-[5px] py-[5px] bg-secondary"
+                                className="inputbox max-w-[150px] 2xl:max-w-[12%]  w-full flex items-center border border-border rounded-[12px] px-[5px] py-[5px] bg-secondary"
                         >
                             <select
                                 className="w-full bg-secondary text-text text-[14px] rounded-lg px-[10px] py-[5px] text-sm focus:outline-none"

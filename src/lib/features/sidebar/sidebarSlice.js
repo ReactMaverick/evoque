@@ -7,7 +7,7 @@ const initialState = {
         { name: "Settings", icon: "material-symbols:settings-outline-rounded", path: "#" },
         { name: "Documents", icon: "icon-park-outline:doc-detail", path: "#" },
         { name: "New", icon: "material-symbols-light:fiber-new-outline-rounded", path: "#" },
-        { name: "Booking", icon: "material-symbols:book-outline-rounded", path: "#" },
+        { name: "Booking", icon: "material-symbols:book-outline-rounded", path: "/booking" },
         { name: "Finance", icon: "material-symbols:finance-rounded", path: "#" },
         { name: "Reports", icon: "mdi:report-line", path: "#" },
     ],
