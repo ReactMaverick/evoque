@@ -1,5 +1,5 @@
-import { selectBooking } from "@/lib/features/booking/bookingSlice"
-import { useAppSelector } from "@/lib/hooks"
+import { selectBooking, selectFilteredData, setPage } from "@/lib/features/booking/bookingSlice"
+import { useAppDispatch, useAppSelector } from "@/lib/hooks"
 import BookingPagination from "./BookingPagination";
 import { convertUnderscoreToCamelCase } from "@/utils/utils";
 import BookingFilter from "./BookingFilter";
@@ -7,12 +7,19 @@ import { Icon } from "@iconify/react";
 
 export default function BookingTable() {
 
-    const { data: bookingData, page, limit, totalPages } = useAppSelector(selectBooking);
+    const dispatch = useAppDispatch();
+
+    const { data: bookingData, limit } = useAppSelector(selectBooking);
 
     // Calculate paginated data
-    const paginatedData = Array.isArray(bookingData)
-        ? bookingData.slice((page - 1) * limit, page * limit)
-        : [];
+    // const paginatedData = Array.isArray(bookingData)
+    //     ? bookingData.slice((page - 1) * limit, page * limit)
+    //     : [];
+
+    const { data: paginatedData, currentPage: page, totalPages } = useAppSelector(selectFilteredData);
+
+    console.log("Paginated Data:", paginatedData);
+
 
     // Define table columns dynamically based on the keys of the first data row
     const columns = Array.isArray(bookingData) && bookingData.length > 0
@@ -66,6 +73,13 @@ export default function BookingTable() {
         return cell;
     };
 
+    // Function to handle page change
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            dispatch(setPage(newPage));
+        }
+    };
+
     return (
         <div className="booking-table w-full bg-black rounded-lg overflow-hidden shadow-lg px-4 py-4">
             {/* Booking Filter  */}
@@ -113,7 +127,7 @@ export default function BookingTable() {
                 page={page}
                 limit={limit}
                 totalPages={totalPages}
-                handleGoToPage={() => { }}
+                handleGoToPage={handlePageChange}
             />
         </div>
     )
