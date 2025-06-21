@@ -924,6 +924,7 @@ const initialState = {
         booking_status: '',
         vouchers: '',
     },
+    sortBy: '',
     isLoading: false,
     error: null,
 }
@@ -949,6 +950,7 @@ initialState.filterData = [
         placeholder: "Sort by",
         name: "sort_by",
         options: ["All", "Arrival", "Departure", "Travel Month", "Destination", "Acc. Manager", "Booking Date", "Agent", "Lead Pax", "Order Value(USD)", "Payment Value(USD)", "Transfer Price", "Trip Status", "Ops SPOC", "Booking Status", "Vouchers"],
+        disabled: true,
     },
     {
         type: "select",
@@ -1019,23 +1021,56 @@ export const selectFilteredData = createSelector(
     [selectBooking],
     (booking) => {
         const { data, filter, page, limit } = booking;
+        const { sort_by } = filter;
+
+        console.log("Sorting by:", sort_by);
+        
+
+        // Filtering
         const filteredData = data.filter((item) => {
             return Object.keys(filter).every((key) => {
-                if (!filter[key]) return true;
-                console.log("Item Key:", key, "Filter Value:", item[key]);
-                
+                if (!filter[key] || key === "sort_by") return true;
                 return item[key]?.toString().toLowerCase().includes(filter[key].toLowerCase());
             });
         });
 
-        console.log("Filtered Data:", filteredData);
-        
+        // Sorting
+        let sortedData = [...filteredData];
+        if (sort_by && sort_by !== "All") {
+            sortedData.sort((a, b) => {
+                const aValue = a[sort_by];
+                const bValue = b[sort_by];
 
+                // Helper: check if value matches date format YY-MM-DD
+                const isDate = (val) => typeof val === "string" && /^\d{2}-\d{2}-\d{2}$/.test(val);
+
+                if (isDate(aValue) && isDate(bValue)) {
+                    // Parse as date: convert to '20YY-MM-DD'
+                    const parseDate = (val) => {
+                        const [yy, mm, dd] = val.split("-");
+                        return new Date(`20${yy}-${mm}-${dd}`);
+                    };
+                    return parseDate(aValue) - parseDate(bValue);
+                }
+
+                // Numeric sort (remove commas and currency symbols)
+                const numA = Number(aValue?.toString().replace(/[^\d.-]/g, ""));
+                const numB = Number(bValue?.toString().replace(/[^\d.-]/g, ""));
+                if (!isNaN(numA) && !isNaN(numB)) {
+                    return numA - numB;
+                }
+
+                // String sort
+                return aValue?.toString().localeCompare(bValue?.toString());
+            });
+        }
+
+        // Pagination
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
         return {
-            data: filteredData.slice(startIndex, endIndex),
-            totalPages: Math.ceil(filteredData.length / limit),
+            data: sortedData.slice(startIndex, endIndex),
+            totalPages: Math.ceil(sortedData.length / limit),
             currentPage: page,
         };
     }
