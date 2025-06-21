@@ -11,14 +11,7 @@ export default function BookingTable() {
 
     const { data: bookingData, limit } = useAppSelector(selectBooking);
 
-    // Calculate paginated data
-    // const paginatedData = Array.isArray(bookingData)
-    //     ? bookingData.slice((page - 1) * limit, page * limit)
-    //     : [];
-
     const { data: paginatedData, currentPage: page, totalPages } = useAppSelector(selectFilteredData);
-
-    console.log("Paginated Data:", paginatedData);
 
 
     // Define table columns dynamically based on the keys of the first data row

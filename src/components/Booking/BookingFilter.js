@@ -23,7 +23,7 @@ export default function BookingFilter() {
     }
 
     const handleApplyFilters = () => {
-        console.log("Applying Filters:", bookingFilters);
+        // console.log("Applying Filters:", bookingFilters);
 
         dispatch(setFilter(bookingFilters));
         setOpen(false);
@@ -34,7 +34,7 @@ export default function BookingFilter() {
         dispatch(clearFilter());
         resetBookingFilters();
         setOpen(false);
-        console.log("Clearing Filters");
+        // console.log("Clearing Filters");
     };
 
     const resetBookingFilters = () => {
@@ -47,7 +47,7 @@ export default function BookingFilter() {
         setBookingFilters(clearedFilters);
     };
 
-    console.log("Filter Data:", filterData);
+    // console.log("Filter Data:", filterData);
 
 
     return (

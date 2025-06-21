@@ -1023,7 +1023,7 @@ export const selectFilteredData = createSelector(
         const { data, filter, page, limit } = booking;
         const { sort_by } = filter;
 
-        console.log("Sorting by:", sort_by);
+        // console.log("Sorting by:", sort_by);
         
 
         // Filtering
