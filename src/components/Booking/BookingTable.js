@@ -1,27 +1,27 @@
-import { selectDashboard } from "@/lib/features/dashboard/dashboardSlice"
+import { selectBooking } from "@/lib/features/booking/bookingSlice"
 import { useAppSelector } from "@/lib/hooks"
-import DashboardPagination from "./DashboardPagination";
+import BookingPagination from "./BookingPagination";
 import { convertUnderscoreToCamelCase } from "@/utils/utils";
 
-export default function DashboardTable() {
+export default function BookingTable() {
 
-    const { data: dashboardData, page, limit, totalPages } = useAppSelector(selectDashboard);
+    const { data: bookingData, page, limit, totalPages } = useAppSelector(selectBooking);
 
     // Calculate paginated data
-    const paginatedData = Array.isArray(dashboardData)
-        ? dashboardData.slice((page - 1) * limit, page * limit)
+    const paginatedData = Array.isArray(bookingData)
+        ? bookingData.slice((page - 1) * limit, page * limit)
         : [];
 
     // Define table columns dynamically based on the keys of the first data row
-    const columns = Array.isArray(dashboardData) && dashboardData.length > 0
-        ? Object.keys(dashboardData[0])
+    const columns = Array.isArray(bookingData) && bookingData.length > 0
+        ? Object.keys(bookingData[0])
         : [];
 
     const columnsCamelCase = columns.map(col => convertUnderscoreToCamelCase(col));
 
 
     return (
-        <div className="dashboard-table w-full overflow-x-auto bg-black rounded-lg shadow-lg px-4 py-4">
+        <div className="booking-table w-full overflow-x-auto bg-black rounded-lg shadow-lg px-4 py-4">
             <table className="w-full text-center text-table-text border border-text rounded-sm overflow-hidden bg-primary">
                 <thead>
                     <tr>
@@ -50,8 +50,8 @@ export default function DashboardTable() {
                     )}
                 </tbody>
             </table>
-            <DashboardPagination
-                dashboardData={dashboardData}
+            <BookingPagination
+                bookingData={bookingData}
                 page={page}
                 limit={limit}
                 totalPages={totalPages}

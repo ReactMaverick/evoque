@@ -1,5 +1,5 @@
-export default function DashboardPagination({ 
-    dashboardData,
+export default function BookingPagination({ 
+    bookingData,
     page,
     limit,
     totalPages,
@@ -8,8 +8,8 @@ export default function DashboardPagination({
     return (
         <div className="flex justify-between items-center mt-4">
             <div className="text-sm">
-                {dashboardData.length > 0 ?
-                    `${(page - 1) * limit + 1}-${Math.min(page * limit, dashboardData.length)} out of ${dashboardData.length} results` :
+                {bookingData.length > 0 ?
+                    `${(page - 1) * limit + 1}-${Math.min(page * limit, bookingData.length)} out of ${bookingData.length} results` :
                     '0 results'}
             </div>
             <div className="flex items-center space-x-2">

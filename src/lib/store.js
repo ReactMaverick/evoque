@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import dashboardReducer from './features/dashboard/dashboardSlice';
-import sidebarReducer from './features/dashboard/sidebarSlice';
+import bookingReducer from './features/booking/bookingSlice';
+import sidebarReducer from './features/sidebar/sidebarSlice';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
-            dashboard: dashboardReducer,
+            booking: bookingReducer,
             sidebar: sidebarReducer,
         },
         middleware: (getDefaultMiddleware) => getDefaultMiddleware({

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react"
 import { LOGO } from "@/constants/images";
-import { selectIsExpanded, selectNavItems, toggleSidebar } from "@/lib/features/dashboard/sidebarSlice";
+import { selectIsExpanded, selectNavItems, toggleSidebar } from "@/lib/features/sidebar/sidebarSlice";
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 

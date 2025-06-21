@@ -1,11 +1,11 @@
 import Sidebar from "@/components/Sidebar/Sidebar";
-import Dashboard from "@/components/Dashboard/Dashboard";
+import Booking from "@/components/Booking/Booking";
 
-export default function HomePage() {
+export default function BookingPage() {
     return (
         <div className="home-page bg-primary min-h-screen pt-0">
             <Sidebar />
-            <Dashboard />
+            <Booking />
         </div>
     );
 }

@@ -336,8 +336,8 @@ const initialState = {
 
 initialState.totalPages = Math.ceil(initialState.data.length / initialState.limit);
 
-const dashboardSlice = createSlice({
-    name: 'dashboard',
+const bookingSlice = createSlice({
+    name: 'booking',
     initialState,
     reducers: {
         setPage: (state, action) => {
@@ -351,7 +351,7 @@ const dashboardSlice = createSlice({
             state.totalPages = Math.ceil(state.data.length / state.limit);
         },
         setData: (state, action) => {
-            // set the data for the dashboard
+            // set the data for the booking
             state.data = action.payload;
             // recalculate total pages when data changes
             state.totalPages = Math.ceil(state.data.length / state.limit);
@@ -359,7 +359,7 @@ const dashboardSlice = createSlice({
     },
 });
 
-export const { setPage, setLimit, setData } = dashboardSlice.actions;
-export const selectDashboard = (state) => state.dashboard;
+export const { setPage, setLimit, setData } = bookingSlice.actions;
+export const selectBooking = (state) => state.booking;
 
-export default dashboardSlice.reducer;
+export default bookingSlice.reducer;
