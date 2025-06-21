@@ -2,15 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     navItems: [
-        { name: "Dashboard", icon: "mdi:view-dashboard", path: "/" },
-        { name: "Calendar", icon: "mdi:calendar-month", path: "#" },
-        { name: "User Profile", icon: "mdi:account-circle", path: "#" },
-        { name: "Forms", icon: "mdi:form-select", path: "#" },
-        { name: "Tables", icon: "mdi:table", path: "#" },
-        { name: "Pages", icon: "mdi:file-document-multiple", path: "#" },
-        { name: "Charts", icon: "mdi:chart-pie", path: "#" },
-        { name: "UI Elements", icon: "mdi:cube-outline", path: "#" },
-        { name: "Log Out", icon: "mdi:login-variant", path: "#" },
+        { name: "Dashboard", icon: "material-symbols:dashboard-outline-rounded", path: "/" },
+        { name: "User", icon: "mdi:user-outline", path: "#" },
+        { name: "Settings", icon: "material-symbols:settings-outline-rounded", path: "#" },
+        { name: "Documents", icon: "icon-park-outline:doc-detail", path: "#" },
+        { name: "New", icon: "material-symbols-light:fiber-new-outline-rounded", path: "#" },
+        { name: "Bookmarks", icon: "material-symbols:book-outline-rounded", path: "#" },
+        { name: "Finance", icon: "material-symbols:finance-rounded", path: "#" },
+        { name: "Reports", icon: "mdi:report-line", path: "#" },
     ],
     isExpanded: false,
 }
