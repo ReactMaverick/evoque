@@ -1036,34 +1036,37 @@ export const selectFilteredData = createSelector(
 
         // Sorting
         let sortedData = [...filteredData];
-        if (sort_by && sort_by !== "All") {
-            sortedData.sort((a, b) => {
-                const aValue = a[sort_by];
-                const bValue = b[sort_by];
+        // if (sort_by && sort_by !== "All") {
+        //     sortedData.sort((a, b) => {
+        //         const aValue = a[sort_by];
+        //         const bValue = b[sort_by];
 
-                // Helper: check if value matches date format YY-MM-DD
-                const isDate = (val) => typeof val === "string" && /^\d{2}-\d{2}-\d{2}$/.test(val);
+        //         // Helper: check if value matches date format YY-MM-DD
+        //         const isDate = (val) => typeof val === "string" && /^\d{2}-\d{2}-\d{2}$/.test(val);
 
-                if (isDate(aValue) && isDate(bValue)) {
-                    // Parse as date: convert to '20YY-MM-DD'
-                    const parseDate = (val) => {
-                        const [yy, mm, dd] = val.split("-");
-                        return new Date(`20${yy}-${mm}-${dd}`);
-                    };
-                    return parseDate(aValue) - parseDate(bValue);
-                }
+        //         if (isDate(aValue) && isDate(bValue)) {
+        //             // Parse as date: convert to '20YY-MM-DD'
+        //             const parseDate = (val) => {
+        //                 const [yy, mm, dd] = val.split("-");
+        //                 return new Date(`20${yy}-${mm}-${dd}`);
+        //             };
+        //             return parseDate(aValue) - parseDate(bValue);
+        //         }
 
-                // Numeric sort (remove commas and currency symbols)
-                const numA = Number(aValue?.toString().replace(/[^\d.-]/g, ""));
-                const numB = Number(bValue?.toString().replace(/[^\d.-]/g, ""));
-                if (!isNaN(numA) && !isNaN(numB)) {
-                    return numA - numB;
-                }
+        //         // Numeric sort (remove commas and currency symbols)
+        //         const numA = Number(aValue?.toString().replace(/[^\d.-]/g, ""));
+        //         const numB = Number(bValue?.toString().replace(/[^\d.-]/g, ""));
+        //         if (!isNaN(numA) && !isNaN(numB)) {
+        //             return numA - numB;
+        //         }
 
-                // String sort
-                return aValue?.toString().localeCompare(bValue?.toString());
-            });
-        }
+        //         // String sort
+        //         return aValue?.toString().localeCompare(bValue?.toString());
+        //     });
+        // }
+
+        console.log("Sorted Data:", sortedData);
+        
 
         // Pagination
         const startIndex = (page - 1) * limit;

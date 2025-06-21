@@ -23,11 +23,13 @@ export default function BookingTable() {
 
     // Function to render cell content based on column type
     const renderCell = (value, column) => {
+        console.log(`Rendering cell for column: ${column}, value: ${value}`);
+        
         let cell = value;
         switch (column) {
             case 'trip_status':
                 switch (value) {
-                    case 'Travelled':
+                    case 'Travelled':                        
                         cell = <span className="bg-lime-green px-2 py-1 rounded-xl text-black">Travelled</span>;
                         break;
                     case 'Confirmed':
@@ -43,6 +45,7 @@ export default function BookingTable() {
                         cell = <span className="text-gray-500 font-semibold">{value}</span>;
                         break;
                 }
+                break;
             case 'booking_status':
                 switch (value) {
                     case 'pending':
@@ -62,7 +65,7 @@ export default function BookingTable() {
             default:
                 break;
         };
-
+        
         return cell;
     };
 
