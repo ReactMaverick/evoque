@@ -72,7 +72,7 @@ export default function BookingFilter() {
                         </div>
                     )
                 )}
-                <button className="rounded-lg bg-btn2 max-w-[120px] w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btntext font-semibold text-sm">
+                <button className="rounded-lg bg-btn max-w-[120px] w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btntext font-semibold text-sm">
                     Apply
                 </button>
             </header>
@@ -81,7 +81,7 @@ export default function BookingFilter() {
             <div className="md:hidden flex justify-end px-2 py-4">
                 <button
                     onClick={() => setOpen(true)}
-                    className="flex items-center gap-2 bg-btn2 text-btntext px-4 py-2 rounded-[12px] font-semibold shadow transition-all duration-200 hover:scale-105"
+                    className="flex items-center gap-2 bg-btn text-btntext px-4 py-2 rounded-[12px] font-semibold shadow transition-all duration-200 hover:scale-105"
                 >
                     <Icon icon="lucide:filter" className="text-lg" />
                     Filter
@@ -144,7 +144,7 @@ export default function BookingFilter() {
                                 </div>
                             )
                         )}
-                        <button className="rounded-lg bg-btn2 w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btntext font-semibold text-sm mt-2">
+                        <button className="rounded-lg bg-btn w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btntext font-semibold text-sm mt-2">
                             Apply
                         </button>
                     </div>
