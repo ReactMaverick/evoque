@@ -1,44 +1,60 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-
-const filters = [
-    { type: "search", placeholder: "Lead pax/Trip id" },
-    {
-        type: "select",
-        placeholder: "Destination",
-        options: ["All", "Destination1", "Destination2", "Destination3"],
-    },
-    {
-        type: "select",
-        placeholder: "Travel Month",
-        options: ["All", "Travel Month1", "Travel Month2", "Travel Month3"],
-    },
-    {
-        type: "select",
-        placeholder: "Sort by",
-        options: ["All", "Sort by1", "Sort by2", "Sort by3"],
-    },
-    {
-        type: "select",
-        placeholder: "Acc. Manager",
-        options: ["All", "Acc. Manager1", "Acc. Manager2", "Acc. Manager3"],
-    },
-    { type: "search", placeholder: "Agent" },
-    {
-        type: "select",
-        placeholder: "Trip status",
-        options: ["All", "Trip status1", "Trip status2", "Trip status3"],
-    },
-];
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { clearFilter, selectFilter, selectFilterData, setFilter } from "@/lib/features/booking/bookingSlice";
 
 export default function BookingFilter() {
+
+    const dispatch = useAppDispatch();
+
+    const filterData = useAppSelector(selectFilterData);
+    const filters = useAppSelector(selectFilter);
+
     const [open, setOpen] = useState(false);
+    const [bookingFilters, setBookingFilters] = useState(filters);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setBookingFilters((prev) => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    const handleApplyFilters = () => {
+        console.log("Applying Filters:", bookingFilters);
+        
+        dispatch(setFilter(bookingFilters));
+        setOpen(false);
+    };
+
+    const handleClearFilters = () => {
+        
+        dispatch(clearFilter());
+        resetBookingFilters();
+        setOpen(false);
+        console.log("Clearing Filters");
+    };
+
+    const resetBookingFilters = () => {
+        let clearedFilters = {};
+
+        Object.keys(filters).forEach((key) => {
+            clearedFilters[key] = "";
+        });
+
+        setBookingFilters(clearedFilters);
+    };
+
+    console.log("Filter Data:", filterData);
+    
 
     return (
         <div className="relative w-full">
             {/* Desktop Filters */}
             <header className="booking-header py-6 md:flex hidden items-stretch xl:justify-between md:justify-start gap-[10px] text-white flex-wrap">
-                {filters.map((filter, idx) =>
+                {filterData.map((filter, idx) =>
                     filter.type === "search" ? (
                         <div
                             key={idx}
@@ -48,7 +64,11 @@ export default function BookingFilter() {
                             <input
                                 type="text"
                                 placeholder={filter.placeholder}
-                                className="w-full bg-secondary text-text placeholder:text-text placeholder:text-opacity-50 text-[14px] rounded-md px-[0px] py-[5px] text-sm focus:outline-none"
+                                className="w-full bg-secondary text-white placeholder:text-text placeholder:text-opacity-50 text-[14px] rounded-md px-[0px] py-[5px] text-sm focus:outline-none"
+                                name={filter.name}
+                                id={filter.name}
+                                value={bookingFilters[filter.name] || ""}
+                                onChange={handleChange}
                             />
                         </div>
                     ) : (
@@ -58,9 +78,12 @@ export default function BookingFilter() {
                         >
                             <select
                                 className="w-full bg-secondary text-text text-[14px] rounded-lg px-[10px] py-[5px] text-sm focus:outline-none"
-                                defaultValue=""
+                                name={filter.name}
+                                id={filter.name}
+                                value={bookingFilters[filter.name] || ""}
+                                onChange={handleChange}
                             >
-                                <option value="" disabled>
+                                <option value="">
                                     {filter.placeholder}
                                 </option>
                                 {filter.options.map((opt) => (
@@ -72,15 +95,24 @@ export default function BookingFilter() {
                         </div>
                     )
                 )}
-                <button className="rounded-lg bg-btn max-w-[120px] w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btn-text font-semibold text-sm">
+                <button className="rounded-lg bg-btn max-w-[120px] w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btn-text font-semibold text-sm"
+                    onClick={handleApplyFilters}
+                >
                     Apply
+                </button>
+                <button
+                    className="rounded-lg bg-text transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-white font-semibold text-sm"
+                    title="Clear Filters"
+                    onClick={handleClearFilters}
+                >
+                    <Icon icon="lucide:trash-2" className="text-lg" />
                 </button>
             </header>
 
             {/* Mobile Filter Button */}
             <div className="md:hidden flex justify-end px-2 py-4">
                 <button
-                    onClick={() => setOpen(true)}
+                    onClick={() => setOpen(!open)}
                     className="flex items-center gap-2 bg-btn text-btn-text px-4 py-2 rounded-[12px] font-semibold shadow transition-all duration-200 hover:scale-105"
                 >
                     <Icon icon="lucide:filter" className="text-lg" />
@@ -110,7 +142,7 @@ export default function BookingFilter() {
                         </button>
                     </div>
                     <div className="flex flex-col gap-4 p-4 bg-secondary">
-                        {filters.map((filter, idx) =>
+                        {filterData.map((filter, idx) =>
                             filter.type === "search" ? (
                                 <div
                                     key={idx}
@@ -121,6 +153,10 @@ export default function BookingFilter() {
                                         type="text"
                                         placeholder={filter.placeholder}
                                         className="w-full bg-secondary text-text placeholder:text-text placeholder:text-opacity-50 text-[14px] rounded-md px-[0px] py-[5px] text-sm focus:outline-none"
+                                        name={filter.name}
+                                        id={filter.name}
+                                        value={bookingFilters[filter.name] || ""}
+                                        onChange={handleChange}
                                     />
                                 </div>
                             ) : (
@@ -130,9 +166,12 @@ export default function BookingFilter() {
                                 >
                                     <select
                                         className="w-full bg-secondary text-text text-[14px] rounded-lg px-[10px] py-[5px] text-sm focus:outline-none"
-                                        defaultValue=""
+                                        name={filter.name}
+                                        id={filter.name}
+                                        value={bookingFilters[filter.name] || ""}
+                                        onChange={handleChange}
                                     >
-                                        <option value="" disabled>
+                                        <option value="">
                                             {filter.placeholder}
                                         </option>
                                         {filter.options.map((opt) => (
@@ -144,8 +183,17 @@ export default function BookingFilter() {
                                 </div>
                             )
                         )}
-                        <button className="rounded-lg bg-btn w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btn-text font-semibold text-sm mt-2">
+                        <button className="rounded-lg bg-btn w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btn-text font-semibold text-sm mt-2"
+                            onClick={handleApplyFilters}
+                        >
                             Apply
+                        </button>
+                        <button
+                            className="rounded-lg bg-text transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-white font-semibold text-sm flex items-center justify-center"
+                            title="Clear Filters"
+                            onClick={handleClearFilters}
+                        >
+                            Clear Filters
                         </button>
                     </div>
                 </aside>

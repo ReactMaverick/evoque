@@ -930,6 +930,41 @@ const initialState = {
 
 initialState.totalPages = Math.ceil(initialState.data.length / initialState.limit);
 
+initialState.filterData = [
+    { type: "search", placeholder: "Lead pax/Trip id", name: "trip_ID" },
+    {
+        type: "select",
+        placeholder: "Destination",
+        name: "destination",
+        options: initialState.data.map(item => item.destination).filter((value, index, self) => self.indexOf(value) === index),
+    },
+    {
+        type: "select",
+        placeholder: "Travel Month",
+        name: "travel_month",
+        options: ["All", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+    },
+    {
+        type: "select",
+        placeholder: "Sort by",
+        name: "sort_by",
+        options: ["All", "Arrival", "Departure", "Travel Month", "Destination", "Acc. Manager", "Booking Date", "Agent", "Lead Pax", "Order Value(USD)", "Payment Value(USD)", "Transfer Price", "Trip Status", "Ops SPOC", "Booking Status", "Vouchers"],
+    },
+    {
+        type: "select",
+        placeholder: "Acc. Manager",
+        name: "acc_manager",
+        options: initialState.data.map(item => item.acc_manager).filter((value, index, self) => self.indexOf(value) === index),
+    },
+    { type: "search", placeholder: "Agent", name: "agent" },
+    {
+        type: "select",
+        placeholder: "Trip status",
+        name: "trip_status",
+        options: ["All", "Confirmed", "On Tour", "Travelled", "Cancelled", "Pending"],
+    },
+]
+
 const bookingSlice = createSlice({
     name: 'booking',
     initialState,
@@ -987,9 +1022,14 @@ export const selectFilteredData = createSelector(
         const filteredData = data.filter((item) => {
             return Object.keys(filter).every((key) => {
                 if (!filter[key]) return true;
-                return item[key].toString().toLowerCase().includes(filter[key].toLowerCase());
+                console.log("Item Key:", key, "Filter Value:", item[key]);
+                
+                return item[key]?.toString().toLowerCase().includes(filter[key].toLowerCase());
             });
         });
+
+        console.log("Filtered Data:", filteredData);
+        
 
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
@@ -1000,5 +1040,7 @@ export const selectFilteredData = createSelector(
         };
     }
 );
+export const selectFilterData = (state) => state.booking.filterData;
+export const selectFilter = (state) => state.booking.filter;
 
 export default bookingSlice.reducer;
