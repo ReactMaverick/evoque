@@ -2,6 +2,7 @@ import { selectBooking } from "@/lib/features/booking/bookingSlice"
 import { useAppSelector } from "@/lib/hooks"
 import BookingPagination from "./BookingPagination";
 import { convertUnderscoreToCamelCase } from "@/utils/utils";
+import BookingFilter from "./BookingFilter";
 
 export default function BookingTable() {
 
@@ -22,6 +23,8 @@ export default function BookingTable() {
 
     return (
         <div className="booking-table w-full overflow-x-auto bg-black rounded-lg shadow-lg px-4 py-4">
+            {/* Booking Filter  */}
+            <BookingFilter />
             <table className="w-full text-center text-table-text border border-text rounded-sm overflow-hidden bg-primary">
                 <thead>
                     <tr>
@@ -55,7 +58,7 @@ export default function BookingTable() {
                 page={page}
                 limit={limit}
                 totalPages={totalPages}
-                handleGoToPage={() => {}}
+                handleGoToPage={() => { }}
             />
         </div>
     )
