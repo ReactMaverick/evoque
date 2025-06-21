@@ -82,6 +82,7 @@ export default function BookingFilter() {
                                 id={filter.name}
                                 value={bookingFilters[filter.name] || ""}
                                 onChange={handleChange}
+                                disabled={filter.disabled || false}
                             >
                                 <option value="">
                                     {filter.placeholder}
@@ -170,6 +171,7 @@ export default function BookingFilter() {
                                         id={filter.name}
                                         value={bookingFilters[filter.name] || ""}
                                         onChange={handleChange}
+                                        disabled={filter.disabled || false}
                                     >
                                         <option value="">
                                             {filter.placeholder}
