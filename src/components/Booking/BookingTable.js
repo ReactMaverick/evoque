@@ -1,5 +1,5 @@
-import { selectBooking } from "@/lib/features/booking/bookingSlice"
-import { useAppSelector } from "@/lib/hooks"
+import { selectBooking, selectFilteredData, setPage } from "@/lib/features/booking/bookingSlice"
+import { useAppDispatch, useAppSelector } from "@/lib/hooks"
 import BookingPagination from "./BookingPagination";
 import { convertUnderscoreToCamelCase } from "@/utils/utils";
 import BookingFilter from "./BookingFilter";
@@ -7,12 +7,19 @@ import { Icon } from "@iconify/react";
 
 export default function BookingTable() {
 
-    const { data: bookingData, page, limit, totalPages } = useAppSelector(selectBooking);
+    const dispatch = useAppDispatch();
+
+    const { data: bookingData, limit } = useAppSelector(selectBooking);
 
     // Calculate paginated data
-    const paginatedData = Array.isArray(bookingData)
-        ? bookingData.slice((page - 1) * limit, page * limit)
-        : [];
+    // const paginatedData = Array.isArray(bookingData)
+    //     ? bookingData.slice((page - 1) * limit, page * limit)
+    //     : [];
+
+    const { data: paginatedData, currentPage: page, totalPages } = useAppSelector(selectFilteredData);
+
+    console.log("Paginated Data:", paginatedData);
+
 
     // Define table columns dynamically based on the keys of the first data row
     const columns = Array.isArray(bookingData) && bookingData.length > 0
@@ -36,9 +43,9 @@ export default function BookingTable() {
                     case 'Cancelled':
                         cell = <span className="bg-pastel-red px-2 py-1 rounded-xl text-black">Cancelled</span>;
                         break;
-                        case 'On Tour':
+                    case 'On Tour':
                         cell = <span className="bg-pastel-yellow px-2 py-1 rounded-xl text-black">On Tour</span>;
-                            break;
+                        break;
                     default:
                         cell = <span className="text-gray-500 font-semibold">{value}</span>;
                         break;
@@ -64,6 +71,13 @@ export default function BookingTable() {
         };
 
         return cell;
+    };
+
+    // Function to handle page change
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            dispatch(setPage(newPage));
+        }
     };
 
     return (
@@ -101,7 +115,7 @@ export default function BookingTable() {
                         ))
                     ) : (
                         <tr>
-                                <td className="p-2 border border-table-border" colSpan={columns.length || 1}>No data available</td>
+                            <td className="p-2 border border-table-border" colSpan={columns.length || 1}>No data available</td>
                         </tr>
                     )}
                 </tbody>
@@ -111,7 +125,7 @@ export default function BookingTable() {
                 page={page}
                 limit={limit}
                 totalPages={totalPages}
-                handleGoToPage={() => { }}
+                handleGoToPage={handlePageChange}
             />
         </div>
     )

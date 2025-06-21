@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     data: [
@@ -906,6 +906,24 @@ const initialState = {
     page: 1,
     limit: 6,
     totalPages: 0,
+    filter: {
+        trip_ID: '',
+        arrival: '',
+        departure: '',
+        travel_month: '',
+        destination: '',
+        acc_manager: '',
+        booking_data: '',
+        agent: '',
+        lead_pax: '',
+        "order_value(USD)": '',
+        "payment_value(USD)": '',
+        transfer_price: '',
+        trip_status: '',
+        ops_spoc: '',
+        booking_status: '',
+        vouchers: '',
+    },
     isLoading: false,
     error: null,
 }
@@ -932,10 +950,55 @@ const bookingSlice = createSlice({
             // recalculate total pages when data changes
             state.totalPages = Math.ceil(state.data.length / state.limit);
         },
+        setFilter: (state, action) => {
+            // set the filter criteria
+            state.filter = { ...state.filter, ...action.payload };
+        },
+        clearFilter: (state) => {
+            // clear the filter criteria
+            state.filter = {
+                trip_ID: '',
+                arrival: '',
+                departure: '',
+                travel_month: '',
+                destination: '',
+                acc_manager: '',
+                booking_data: '',
+                agent: '',
+                lead_pax: '',
+                "order_value(USD)": '',
+                "payment_value(USD)": '',
+                transfer_price: '',
+                trip_status: '',
+                ops_spoc: '',
+                booking_status: '',
+                vouchers: '',
+            };
+        },
     },
 });
 
-export const { setPage, setLimit, setData } = bookingSlice.actions;
+export const { setPage, setLimit, setData, setFilter, clearFilter } = bookingSlice.actions;
 export const selectBooking = (state) => state.booking;
+export const selectFilteredData = createSelector(
+    [selectBooking],
+    (booking) => {
+        const { data, filter, page, limit } = booking;
+        const filteredData = data.filter((item) => {
+            return Object.keys(filter).every((key) => {
+                if (!filter[key]) return true;
+                return item[key].toString().toLowerCase().includes(filter[key].toLowerCase());
+            });
+        });
+
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+        return {
+            data: filteredData.slice(startIndex, endIndex),
+            totalPages: Math.ceil(filteredData.length / limit),
+            currentPage: page,
+        };
+    }
+);
 
 export default bookingSlice.reducer;
