@@ -3,6 +3,7 @@ import { useAppSelector } from "@/lib/hooks"
 import BookingPagination from "./BookingPagination";
 import { convertUnderscoreToCamelCase } from "@/utils/utils";
 import BookingFilter from "./BookingFilter";
+import { Icon } from "@iconify/react";
 
 export default function BookingTable() {
 
@@ -20,19 +21,64 @@ export default function BookingTable() {
 
     const columnsCamelCase = columns.map(col => convertUnderscoreToCamelCase(col));
 
+    // Function to render cell content based on column type
+    const renderCell = (value, column) => {
+        let cell = value;
+        switch (column) {
+            case 'trip_status':
+                switch (value) {
+                    case 'Travelled':
+                        cell = <span className="bg-lime-green px-2 py-1 rounded-xl text-black">Travelled</span>;
+                        break;
+                    case 'Confirmed':
+                        cell = <span className="bg-light-blue px-2 py-1 rounded-xl text-black">Confirmed</span>;
+                        break;
+                    case 'Cancelled':
+                        cell = <span className="bg-pastel-red px-2 py-1 rounded-xl text-black">Cancelled</span>;
+                        break;
+                        case 'On Tour':
+                        cell = <span className="bg-pastel-yellow px-2 py-1 rounded-xl text-black">On Tour</span>;
+                            break;
+                    default:
+                        cell = <span className="text-gray-500 font-semibold">{value}</span>;
+                        break;
+                }
+            case 'booking_status':
+                switch (value) {
+                    case 'pending':
+                        cell = <span className="flex justify-center items-center"><Icon icon="ic:round-circle" className="text-yellow-500 w-5 h-5" /></span>;
+                        break;
+                    case 'active':
+                        cell = <span className="flex justify-center items-center"><Icon icon="ic:round-circle" className="text-green-500 w-5 h-5" /></span>;
+                        break;
+                    case 'cancelled':
+                        cell = <span className="flex justify-center items-center"><Icon icon="ic:round-circle" className="text-red-500 w-5 h-5" /></span>;
+                        break;
+                    default:
+                        cell = <span className="text-gray-500 font-semibold">{value}</span>;
+                        break;
+                }
+                break;
+            default:
+                break;
+        };
+
+        return cell;
+    };
 
     return (
         <div className="booking-table w-full overflow-x-auto bg-black rounded-lg shadow-lg px-4 py-4">
             {/* Booking Filter  */}
             <BookingFilter />
-            <table className="w-full text-center text-table-text border border-text rounded-sm overflow-hidden bg-primary">
+            <table className="w-full text-center text-table-text border border-text rounded-sm overflow-hidden bg-primary border-collapse">
                 <thead>
                     <tr>
                         {columnsCamelCase.map((col, index) => (
-                            <th key={index} className="p-4 text-[0.75rem]">
+                            <th key={index} className="p-4 text-[0.75rem] border border-text">
                                 {col}
                             </th>
                         ))}
+                        <th className="p-4 text-[0.75rem] border border-text">Actions</th>
                     </tr>
                 </thead>
                 <tbody className="bg-secondary">
@@ -40,15 +86,22 @@ export default function BookingTable() {
                         paginatedData.map((row, index) => (
                             <tr key={index}>
                                 {columns.map((col, index) => (
-                                    <td key={index} className="p-4 text-[0.625rem]">
-                                        {row[col] !== undefined ? row[col] : 'N/A'}
+                                    <td key={index} className="p-2 text-[0.625rem] border border-table-border">
+                                        {renderCell(row[col], col)}
                                     </td>
                                 ))}
+                                <td className="p-2 text-[0.625rem] border border-table-border">
+                                    <div className="flex justify-center">
+                                        <button title="Edit" className="bg-btn rounded-lg p-1 hover:bg-btn-hover transition text-black">
+                                            <Icon icon="material-symbols:edit-outline" width={18} height={18} />
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td className="p-4" colSpan={columns.length || 1}>No data available</td>
+                                <td className="p-2 border border-table-border" colSpan={columns.length || 1}>No data available</td>
                         </tr>
                     )}
                 </tbody>

@@ -1,3 +1,5 @@
+import { Icon } from "@iconify/react";
+
 export default function BookingPagination({ 
     bookingData,
     page,
@@ -6,34 +8,30 @@ export default function BookingPagination({
     handleGoToPage = () => {}
  }) {
     return (
-        <div className="flex justify-between items-center mt-4">
-            <div className="text-sm">
+        <div className="flex justify-between items-center mt-4 text-table-text">
+            <div className="text-[0.875rem]">
                 {bookingData.length > 0 ?
-                    `${(page - 1) * limit + 1}-${Math.min(page * limit, bookingData.length)} out of ${bookingData.length} results` :
+                    `${limit} out of ${bookingData.length} results` :
                     '0 results'}
             </div>
             <div className="flex items-center space-x-2">
                 <button
-                    className="p-1 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="p-1 text-white rounded disabled:opacity-50"
                     disabled={page <= 1}
                 // onClick={() => handleGoToPage(1)}
                 >
                     <span className="sr-only">First</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                        <path fillRule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                    </svg>
+                    <Icon icon="meteor-icons:angles-left" width={18} height={18} />
                 </button>
-                <button
-                    className="p-1 bg-gray-700 text-white rounded disabled:opacity-50"
-                    disabled={page <= 1}
-                // onClick={() => handleGoToPage(page - 1)}
-                >
-                    <span className="sr-only">Previous</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                    </svg>
-                </button>
+                {page > 1 && (
+                    <button
+                        className="p-1 text-white rounded disabled:opacity-50"
+                    // onClick={() => handleGoToPage(page - 1)}
+                    >
+                        <span className="sr-only">Previous</span>
+                        <Icon icon="meteor-icons:angle-left" width={18} height={18} />
+                    </button>
+                )}
 
                 {/* Page numbers */}
                 {[...Array(Math.min(totalPages, 3))].map((_, idx) => {
@@ -41,7 +39,7 @@ export default function BookingPagination({
                     return (
                         <button
                             key={pageNum}
-                            className={`w-8 h-8 rounded ${page === pageNum ? 'bg-blue-600 text-white' : 'bg-gray-700 text-white'}`}
+                            className={`w-6 h-6 rounded text-[0.78rem] ${page === pageNum ? 'bg-pagination-bg text-primary' : 'bg-primary text-white'}`}
                         // onClick={() => handleGoToPage(pageNum)}
                         >
                             {pageNum}
@@ -50,25 +48,20 @@ export default function BookingPagination({
                 })}
 
                 <button
-                    className="p-1 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="p-1 text-white rounded disabled:opacity-50"
                     disabled={page >= totalPages}
                 // onClick={() => handleGoToPage(page + 1)}
                 >
                     <span className="sr-only">Next</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                    </svg>
+                    <Icon icon="meteor-icons:angle-right" width={18} height={18} />
                 </button>
                 <button
-                    className="p-1 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="p-1 text-white rounded disabled:opacity-50"
                     disabled={page >= totalPages}
                 // onClick={() => handleGoToPage(totalPages)}
                 >
                     <span className="sr-only">Last</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
-                        <path fillRule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
-                    </svg>
+                    <Icon icon="meteor-icons:angles-right" width={18} height={18} />
                 </button>
             </div>
         </div>

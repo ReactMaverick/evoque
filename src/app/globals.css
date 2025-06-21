@@ -13,6 +13,12 @@
   --color-btn: #c6c6f9;
   --color-text: #555555;
   --color-table-text: #DADADA;
+  --color-pagination-bg: #7FA6AE;
+  --color-table-border: #343434;
+  --color-lime-green: #B7EEBC;
+  --color-light-blue: #778BE8;
+  --color-pastel-red: #FF6B6C;
+  --color-pastel-yellow: #FFE17C;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }
