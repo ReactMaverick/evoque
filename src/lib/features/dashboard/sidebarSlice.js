@@ -10,7 +10,7 @@ const initialState = {
         { name: "Pages", icon: "mdi:file-document-multiple", path: "#" },
         { name: "Charts", icon: "mdi:chart-pie", path: "#" },
         { name: "UI Elements", icon: "mdi:cube-outline", path: "#" },
-        { name: "Authentication", icon: "mdi:login-variant", path: "#" },
+        { name: "Log Out", icon: "mdi:login-variant", path: "#" },
     ],
     isExpanded: false,
 }
