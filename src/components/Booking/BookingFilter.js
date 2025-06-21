@@ -24,13 +24,13 @@ export default function BookingFilter() {
 
     const handleApplyFilters = () => {
         console.log("Applying Filters:", bookingFilters);
-        
+
         dispatch(setFilter(bookingFilters));
         setOpen(false);
     };
 
     const handleClearFilters = () => {
-        
+
         dispatch(clearFilter());
         resetBookingFilters();
         setOpen(false);
@@ -48,17 +48,17 @@ export default function BookingFilter() {
     };
 
     console.log("Filter Data:", filterData);
-    
+
 
     return (
         <div className="relative w-full">
             {/* Desktop Filters */}
-            <header className="booking-header py-6 md:flex hidden items-stretch xl:justify-between md:justify-start gap-[10px] text-white flex-wrap">
+            <header className="booking-header py-6 md:flex hidden items-stretch 2xl:justify-between justify-start gap-[15px] text-white flex-wrap">
                 {filterData.map((filter, idx) =>
                     filter.type === "search" ? (
                         <div
                             key={idx}
-                            className="inputbox max-w-[165px] 2xl:max-w-[12%] w-full flex items-center gap-2 border border-border rounded-full px-[8px] py-[5px] bg-secondary"
+                            className="inputbox max-w-[160px] 2xl:max-w-[11%] xl:max-w-[13%] lg:max-w-[12%] w-full flex items-center gap-2 border border-border rounded-full px-[8px] py-[5px] bg-secondary"
                         >
                             <Icon icon="lucide:search" className="text-[1.25rem] text-text" />
                             <input
@@ -74,7 +74,7 @@ export default function BookingFilter() {
                     ) : (
                         <div
                             key={idx}
-                                className="inputbox max-w-[150px] 2xl:max-w-[12%]  w-full flex items-center border border-border rounded-[12px] px-[5px] py-[5px] bg-secondary"
+                                className="inputbox max-w-[155px] 2xl:max-w-[11%] xl:max-w-[13%] lg:max-w-[12%] w-full flex items-center border border-border rounded-[12px] px-[5px] py-[5px] bg-secondary"
                         >
                             <select
                                 className="w-full bg-secondary text-text text-[14px] rounded-lg px-[10px] py-[5px] text-sm focus:outline-none"
@@ -95,7 +95,7 @@ export default function BookingFilter() {
                         </div>
                     )
                 )}
-                <button className="rounded-lg bg-btn max-w-[120px] w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btn-text font-semibold text-sm"
+                <button className="rounded-lg bg-btn max-w-[120px] 2xl:max-w-[10%] w-full transition-all duration-300 ease-in-out hover:scale-105 px-[12px] py-[7px] text-btn-text font-semibold text-sm"
                     onClick={handleApplyFilters}
                 >
                     Apply

@@ -84,16 +84,16 @@ export default function BookingTable() {
         <div className="booking-table w-full bg-black rounded-lg overflow-hidden shadow-lg px-4 py-4">
             {/* Booking Filter  */}
             <BookingFilter />
-            <div className="2xl:overflow-hidden overflow-x-scroll">
-                <table className="w-full text-left text-table-text border border-text rounded-sm bg-primary border-collapse">
+            <div className="2xl:overflow-hidden rounded-[4px] overflow-x-scroll">
+                <table className="w-full text-left text-table-text border-2 border-table-border rounded-[4px] overflow-hidden bg-primary border-collapse">
                     <thead>
                         <tr>
                             {columnsCamelCase.map((col, index) => (
-                                <th key={index} className="p-[12px] text-[14px] font-normal border border-text">
+                                <th key={index} className="p-[12px] bg-primary text-[14px] font-normal border border-table-border">
                                     {col}
                                 </th>
                             ))}
-                            <th className="p-[12px] text-[14px] border border-text">Actions</th>
+                            <th className="p-[12px] text-[14px] border-2 border-table-border">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="bg-secondary">
