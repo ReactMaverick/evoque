@@ -122,7 +122,7 @@ export default function BookingFilter() {
             </div>
 
             {/* Mobile Sidebar Filter (fixed to BookingFilter section, not body) */}
-            <div className={`md:hidden absolute right-0 top-0 h-full w-[90vw] max-w-xs z-50 transition-all duration-300 ${open ? "visible" : "invisible pointer-events-none"}`}>
+            <div className={`md:hidden absolute right-0 top-0 h-full w-[90vw] max-w-[65vw] z-50 transition-all duration-300 ${open ? "visible" : "invisible pointer-events-none"}`}>
                 {/* Overlay */}
                 <div
                     className={`absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}

@@ -1,3 +1,4 @@
+import { convertWordsToUnderscore } from '@/utils/utils';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -949,8 +950,8 @@ initialState.filterData = [
         type: "select",
         placeholder: "Sort by",
         name: "sort_by",
-        options: ["All", "Arrival", "Departure", "Travel Month", "Destination", "Acc. Manager", "Booking Date", "Agent", "Lead Pax", "Order Value(USD)", "Payment Value(USD)", "Transfer Price", "Trip Status", "Ops SPOC", "Booking Status", "Vouchers"],
-        disabled: true,
+        options: ["All", "Arrival", "Departure", "Travel Month", "Destination", "Acc. Manager", "Booking Date", "Agent", "Lead Pax", "Order Value (USD)", "Payment Value (USD)", "Transfer Price", "Trip Status", "Ops SPOC", "Booking Status", "Vouchers"],
+        // disabled: true,
     },
     {
         type: "select",
@@ -1036,36 +1037,51 @@ export const selectFilteredData = createSelector(
 
         // Sorting
         let sortedData = [...filteredData];
-        // if (sort_by && sort_by !== "All") {
-        //     sortedData.sort((a, b) => {
-        //         const aValue = a[sort_by];
-        //         const bValue = b[sort_by];
+        if (sort_by && sort_by !== "All") {
+            const sortKey = convertWordsToUnderscore(sort_by);
+            console.log("Sort Key:", sortKey, "Sort By:", sort_by);
+            
+            sortedData.sort((a, b) => {
+                const aValue = a[sortKey];
+                const bValue = b[sortKey];
 
-        //         // Helper: check if value matches date format YY-MM-DD
-        //         const isDate = (val) => typeof val === "string" && /^\d{2}-\d{2}-\d{2}$/.test(val);
+                console.log("Sorting by:", sort_by, "Values:", aValue, bValue);
+                
 
-        //         if (isDate(aValue) && isDate(bValue)) {
-        //             // Parse as date: convert to '20YY-MM-DD'
-        //             const parseDate = (val) => {
-        //                 const [yy, mm, dd] = val.split("-");
-        //                 return new Date(`20${yy}-${mm}-${dd}`);
-        //             };
-        //             return parseDate(aValue) - parseDate(bValue);
-        //         }
+                // Helper: check if value matches date format YY-MM-DD
+                const isDate = (val) => typeof val === "string" && /^\d{2}-\d{2}-\d{2}$/.test(val);
 
-        //         // Numeric sort (remove commas and currency symbols)
-        //         const numA = Number(aValue?.toString().replace(/[^\d.-]/g, ""));
-        //         const numB = Number(bValue?.toString().replace(/[^\d.-]/g, ""));
-        //         if (!isNaN(numA) && !isNaN(numB)) {
-        //             return numA - numB;
-        //         }
+                if (isDate(aValue) && isDate(bValue)) {
+                    console.log("Sorting by date:", aValue, bValue);
+                    
+                    // Parse as date: convert to '20YY-MM-DD'
+                    const parseDate = (val) => {
+                        const [yy, mm, dd] = val.split("-");
+                        return new Date(`20${yy}-${mm}-${dd}`);
+                    };
+                    return parseDate(aValue) - parseDate(bValue);
+                }
 
-        //         // String sort
-        //         return aValue?.toString().localeCompare(bValue?.toString());
-        //     });
-        // }
+                // Numeric sort (remove commas and currency symbols)
+                // Check if strings actually contain numeric content
+                if (/\d/.test(aValue?.toString()) && /\d/.test(bValue?.toString())) {
+                    const numA = Number(aValue?.toString().replace(/[^\d.-]/g, ""));
+                    const numB = Number(bValue?.toString().replace(/[^\d.-]/g, ""));
+                    if (!isNaN(numA) && !isNaN(numB)) {
+                        console.log("Sorting by number:", numA, numB);
+                        return numA - numB;
+                    }
+                }
 
-        // console.log("Sorted Data:", sortedData);
+                console.log("Sort Result ==> ", aValue?.toString().localeCompare(bValue?.toString()));
+                
+
+                // String sort
+                return aValue?.toString().localeCompare(bValue?.toString());
+            });
+        }
+
+        console.log("Sorted Data:", sortedData);
         
 
         // Pagination

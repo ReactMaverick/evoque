@@ -23,7 +23,7 @@ export default function BookingTable() {
 
     // Function to render cell content based on column type
     const renderCell = (value, column) => {
-        console.log(`Rendering cell for column: ${column}, value: ${value}`);
+        // console.log(`Rendering cell for column: ${column}, value: ${value}`);
 
         let cell = value;
         switch (column) {
