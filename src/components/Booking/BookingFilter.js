@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { clearFilter, selectFilter, selectFilterData, setFilter } from "@/lib/features/booking/bookingSlice";
+import { clearFilter, selectFilter, selectFilterData, setFilter, setPage } from "@/lib/features/booking/bookingSlice";
 
 export default function BookingFilter() {
 
@@ -25,6 +25,7 @@ export default function BookingFilter() {
     const handleApplyFilters = () => {
         // console.log("Applying Filters:", bookingFilters);
 
+        dispatch(setPage(1)); // Reset to first page on filter change
         dispatch(setFilter(bookingFilters));
         setOpen(false);
     };
@@ -32,6 +33,7 @@ export default function BookingFilter() {
     const handleClearFilters = () => {
 
         dispatch(clearFilter());
+        dispatch(setPage(1));
         resetBookingFilters();
         setOpen(false);
         // console.log("Clearing Filters");
