@@ -1039,20 +1039,20 @@ export const selectFilteredData = createSelector(
         let sortedData = [...filteredData];
         if (sort_by && sort_by !== "All") {
             const sortKey = convertWordsToUnderscore(sort_by);
-            console.log("Sort Key:", sortKey, "Sort By:", sort_by);
+            // console.log("Sort Key:", sortKey, "Sort By:", sort_by);
             
             sortedData.sort((a, b) => {
                 const aValue = a[sortKey];
                 const bValue = b[sortKey];
 
-                console.log("Sorting by:", sort_by, "Values:", aValue, bValue);
+                // console.log("Sorting by:", sort_by, "Values:", aValue, bValue);
                 
 
                 // Helper: check if value matches date format YY-MM-DD
                 const isDate = (val) => typeof val === "string" && /^\d{2}-\d{2}-\d{2}$/.test(val);
 
                 if (isDate(aValue) && isDate(bValue)) {
-                    console.log("Sorting by date:", aValue, bValue);
+                    // console.log("Sorting by date:", aValue, bValue);
                     
                     // Parse as date: convert to '20YY-MM-DD'
                     const parseDate = (val) => {
@@ -1060,7 +1060,7 @@ export const selectFilteredData = createSelector(
                         return new Date(`20${yy}`, parseInt(mm) - 1, dd);
                     };
 
-                    console.log("Parsed Dates:", parseDate(aValue), parseDate(bValue));
+                    // console.log("Parsed Dates:", parseDate(aValue), parseDate(bValue));
                     
 
                     return parseDate(aValue) - parseDate(bValue);
@@ -1072,12 +1072,12 @@ export const selectFilteredData = createSelector(
                     const numA = Number(aValue?.toString().replace(/[^\d.-]/g, ""));
                     const numB = Number(bValue?.toString().replace(/[^\d.-]/g, ""));
                     if (!isNaN(numA) && !isNaN(numB)) {
-                        console.log("Sorting by number:", numA, numB);
+                        // console.log("Sorting by number:", numA, numB);
                         return numA - numB;
                     }
                 }
 
-                console.log("Sort Result ==> ", aValue?.toString().localeCompare(bValue?.toString()));
+                // console.log("Sort Result ==> ", aValue?.toString().localeCompare(bValue?.toString()));
                 
 
                 // String sort
@@ -1085,7 +1085,7 @@ export const selectFilteredData = createSelector(
             });
         }
 
-        console.log("Sorted Data:", sortedData);
+        // console.log("Sorted Data:", sortedData);
         
 
         // Pagination
